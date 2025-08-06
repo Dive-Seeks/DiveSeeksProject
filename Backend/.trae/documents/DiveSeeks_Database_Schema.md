@@ -47,7 +47,8 @@ CREATE TYPE user_role AS ENUM (
     'cashier',
     'kitchen_staff',
     'delivery_driver',
-    'inventory_manager'
+    'inventory_manager',
+    'finance_manager'
 );
 
 -- User status enum

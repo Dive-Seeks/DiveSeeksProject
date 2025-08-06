@@ -45,61 +45,71 @@ graph TD
 
 ## 2. Technology Description
 
-- **Frontend**: Next.js@14 + TypeScript + Tailwind CSS@3 + Zustand + React Query
-- **Backend**: NestJS@10 + TypeORM + PostgreSQL@15 + Redis@7
-- **Authentication**: JWT + bcrypt + TOTP (2FA)
-- **Real-time**: WebSocket + Socket.IO
-- **Caching**: Redis for session management and frequently accessed data
-- **File Storage**: Local storage with optional AWS S3 integration
-- **Deployment**: Docker + PM2 + Nginx + CI/CD pipeline
+* **Frontend**: Next.js\@14 + TypeScript + Tailwind CSS\@3 + Zustand + React Query
+
+* **Backend**: NestJS\@10 + TypeORM + PostgreSQL\@15 + Redis\@7
+
+* **Authentication**: JWT + bcrypt + TOTP (2FA)
+
+* **Real-time**: WebSocket + Socket.IO
+
+* **Caching**: Redis for session management and frequently accessed data
+
+* **File Storage**: Local storage with optional AWS S3 integration
+
+* **Deployment**: Docker + PM2 + Nginx + CI/CD pipeline
 
 ## 3. Route Definitions
 
-| Route | Purpose |
-|-------|----------|
-| / | Dashboard home page with role-based content |
-| /login | Authentication page with 2FA support |
-| /pos | POS terminal interface for sales transactions |
-| /inventory | Product and stock management interface |
-| /inventory/products | Product catalog and management |
-| /inventory/stock | Stock levels and transfer management |
-| /sales | Sales history and transaction management |
-| /reports | Analytics dashboard and report generation |
-| /reports/sales | Sales performance and analytics |
-| /reports/financial | Financial reports and accounting |
-| /customers | Customer relationship management |
-| /customers/loyalty | Loyalty program management |
-| /purchases | Purchase order and vendor management |
-| /stores | Multi-store management and configuration |
-| /settings | System configuration and administration |
-| /settings/users | User management and role assignment |
-| /settings/taxes | Tax configuration and rules |
-| /ai-insights | AI-powered analytics and recommendations |
+| Route               | Purpose                                       |
+| ------------------- | --------------------------------------------- |
+| /                   | Dashboard home page with role-based content   |
+| /login              | Authentication page with 2FA support          |
+| /pos                | POS terminal interface for sales transactions |
+| /inventory          | Product and stock management interface        |
+| /inventory/products | Product catalog and management                |
+| /inventory/stock    | Stock levels and transfer management          |
+| /sales              | Sales history and transaction management      |
+| /reports            | Analytics dashboard and report generation     |
+| /reports/sales      | Sales performance and analytics               |
+| /reports/financial  | Financial reports and accounting              |
+| /customers          | Customer relationship management              |
+| /customers/loyalty  | Loyalty program management                    |
+| /purchases          | Purchase order and vendor management          |
+| /stores             | Multi-store management and configuration      |
+| /settings           | System configuration and administration       |
+| /settings/users     | User management and role assignment           |
+| /settings/taxes     | Tax configuration and rules                   |
+| /ai-insights        | AI-powered analytics and recommendations      |
 
 ## 4. API Definitions
 
 ### 4.1 Authentication APIs
 
 **User Login**
+
 ```
 POST /api/auth/login
 ```
 
 Request:
-| Param Name | Param Type | isRequired | Description |
-|------------|------------|------------|-------------|
-| email | string | true | User email address |
-| password | string | true | User password |
-| totpCode | string | false | 2FA TOTP code (required for admin/manager) |
+
+| Param Name | Param Type | isRequired | Description                                |
+| ---------- | ---------- | ---------- | ------------------------------------------ |
+| email      | string     | true       | User email address                         |
+| password   | string     | true       | User password                              |
+| totpCode   | string     | false      | 2FA TOTP code (required for admin/manager) |
 
 Response:
-| Param Name | Param Type | Description |
-|------------|------------|-------------|
-| accessToken | string | JWT access token (15min expiry) |
-| refreshToken | string | Refresh token for token renewal |
-| user | object | User profile with role and permissions |
+
+| Param Name   | Param Type | Description                            |
+| ------------ | ---------- | -------------------------------------- |
+| accessToken  | string     | JWT access token (15min expiry)        |
+| refreshToken | string     | Refresh token for token renewal        |
+| user         | object     | User profile with role and permissions |
 
 **Token Refresh**
+
 ```
 POST /api/auth/refresh
 ```
@@ -107,57 +117,64 @@ POST /api/auth/refresh
 ### 4.2 Product Management APIs
 
 **Get Products**
+
 ```
 GET /api/products
 ```
 
 Query Parameters:
-| Param Name | Param Type | Description |
-|------------|------------|-------------|
-| page | number | Page number for pagination |
-| limit | number | Items per page (default: 50) |
-| search | string | Search term for product name/barcode |
-| category | string | Filter by category ID |
-| storeId | string | Filter by store location |
+
+| Param Name | Param Type | Description                          |
+| ---------- | ---------- | ------------------------------------ |
+| page       | number     | Page number for pagination           |
+| limit      | number     | Items per page (default: 50)         |
+| search     | string     | Search term for product name/barcode |
+| category   | string     | Filter by category ID                |
+| storeId    | string     | Filter by store location             |
 
 **Create Product**
+
 ```
 POST /api/products
 ```
 
 Request:
-| Param Name | Param Type | isRequired | Description |
-|------------|------------|------------|-------------|
-| name | string | true | Product name |
-| description | string | false | Product description |
-| barcode | string | true | Primary barcode |
-| alternateBarcodes | string[] | false | Additional barcodes |
-| categoryId | string | true | Product category |
-| costPrice | number | true | Purchase cost |
-| sellingPrice | number | true | Retail price |
-| reorderLevel | number | true | Minimum stock level |
-| trackBatch | boolean | false | Enable batch tracking |
-| trackExpiry | boolean | false | Enable expiry date tracking |
+
+| Param Name        | Param Type | isRequired | Description                 |
+| ----------------- | ---------- | ---------- | --------------------------- |
+| name              | string     | true       | Product name                |
+| description       | string     | false      | Product description         |
+| barcode           | string     | true       | Primary barcode             |
+| alternateBarcodes | string\[]  | false      | Additional barcodes         |
+| categoryId        | string     | true       | Product category            |
+| costPrice         | number     | true       | Purchase cost               |
+| sellingPrice      | number     | true       | Retail price                |
+| reorderLevel      | number     | true       | Minimum stock level         |
+| trackBatch        | boolean    | false      | Enable batch tracking       |
+| trackExpiry       | boolean    | false      | Enable expiry date tracking |
 
 ### 4.3 Sales Transaction APIs
 
 **Create Sale**
+
 ```
 POST /api/sales
 ```
 
 Request:
-| Param Name | Param Type | isRequired | Description |
-|------------|------------|------------|-------------|
-| storeId | string | true | Store location ID |
-| customerId | string | false | Customer ID (for loyalty) |
-| items | array | true | Array of sale items |
-| payments | array | true | Payment method details |
-| discounts | array | false | Applied discounts |
-| taxAmount | number | true | Total tax amount |
-| totalAmount | number | true | Final total amount |
+
+| Param Name  | Param Type | isRequired | Description               |
+| ----------- | ---------- | ---------- | ------------------------- |
+| storeId     | string     | true       | Store location ID         |
+| customerId  | string     | false      | Customer ID (for loyalty) |
+| items       | array      | true       | Array of sale items       |
+| payments    | array      | true       | Payment method details    |
+| discounts   | array      | false      | Applied discounts         |
+| taxAmount   | number     | true       | Total tax amount          |
+| totalAmount | number     | true       | Final total amount        |
 
 **Sale Item Structure:**
+
 ```json
 {
   "productId": "uuid",
@@ -172,11 +189,13 @@ Request:
 ### 4.4 Inventory Management APIs
 
 **Stock Transfer**
+
 ```
 POST /api/inventory/transfers
 ```
 
 **Stock Adjustment**
+
 ```
 POST /api/inventory/adjustments
 ```
@@ -184,18 +203,20 @@ POST /api/inventory/adjustments
 ### 4.5 Reporting APIs
 
 **Sales Report**
+
 ```
 GET /api/reports/sales
 ```
 
 Query Parameters:
-| Param Name | Param Type | Description |
-|------------|------------|-------------|
-| startDate | string | Report start date (ISO format) |
-| endDate | string | Report end date (ISO format) |
-| storeId | string | Filter by store |
-| groupBy | string | Group by: day, week, month |
-| format | string | Response format: json, csv, pdf |
+
+| Param Name | Param Type | Description                     |
+| ---------- | ---------- | ------------------------------- |
+| startDate  | string     | Report start date (ISO format)  |
+| endDate    | string     | Report end date (ISO format)    |
+| storeId    | string     | Filter by store                 |
+| groupBy    | string     | Group by: day, week, month      |
+| format     | string     | Response format: json, csv, pdf |
 
 ## 5. Server Architecture Diagram
 
@@ -354,6 +375,7 @@ erDiagram
 ### 6.2 Data Definition Language
 
 **Users Table**
+
 ```sql
 -- Create users table
 CREATE TABLE users (
@@ -378,6 +400,7 @@ CREATE INDEX idx_users_store_id ON users(store_id);
 ```
 
 **Products Table**
+
 ```sql
 -- Create products table
 CREATE TABLE products (
@@ -404,6 +427,7 @@ CREATE INDEX idx_products_name ON products USING gin(to_tsvector('english', name
 ```
 
 **Sales Table**
+
 ```sql
 -- Create sales table
 CREATE TABLE sales (
@@ -431,6 +455,7 @@ CREATE INDEX idx_sales_sale_number ON sales(sale_number);
 ```
 
 **Inventory Table**
+
 ```sql
 -- Create inventory table
 CREATE TABLE inventory (
@@ -452,6 +477,7 @@ CREATE INDEX idx_inventory_quantity ON inventory(quantity);
 ```
 
 **Initial Data**
+
 ```sql
 -- Insert default roles
 INSERT INTO roles (id, name, permissions) VALUES
@@ -475,6 +501,7 @@ INSERT INTO users (id, email, password_hash, name, role_id) VALUES
 ## 7. Security Implementation
 
 ### 7.1 Authentication Flow
+
 1. User submits credentials to `/api/auth/login`
 2. Server validates credentials and 2FA code (if required)
 3. JWT access token (15min) and refresh token (7 days) are generated
@@ -483,29 +510,45 @@ INSERT INTO users (id, email, password_hash, name, role_id) VALUES
 6. Server validates JWT on each request using authentication guard
 
 ### 7.2 Authorization
-- Role-based permissions stored in database
-- Guards check user permissions for each endpoint
-- Resource-level authorization (e.g., store-specific access)
-- Activity logging for audit trails
+
+* Role-based permissions stored in database
+
+* Guards check user permissions for each endpoint
+
+* Resource-level authorization (e.g., store-specific access)
+
+* Activity logging for audit trails
 
 ### 7.3 Data Protection
-- All passwords hashed with bcrypt (salt rounds: 12)
-- Sensitive data encrypted at rest
-- HTTPS enforced for all communications
-- Input validation and sanitization
-- SQL injection prevention through parameterized queries
+
+* All passwords hashed with bcrypt (salt rounds: 12)
+
+* Sensitive data encrypted at rest
+
+* HTTPS enforced for all communications
+
+* Input validation and sanitization
+
+* SQL injection prevention through parameterized queries
 
 ## 8. Deployment Architecture
 
 ### 8.1 Production Environment
-- **Load Balancer**: Nginx with SSL termination
-- **Application**: NestJS running on PM2 cluster mode
-- **Database**: PostgreSQL with read replicas
-- **Cache**: Redis cluster for session management
-- **File Storage**: Local storage with S3 backup
-- **Monitoring**: Application logs, performance metrics, error tracking
+
+* **Load Balancer**: Nginx with SSL termination
+
+* **Application**: NestJS running on PM2 cluster mode
+
+* **Database**: PostgreSQL with read replicas
+
+* **Cache**: Redis cluster for session management
+
+* **File Storage**: Local storage with S3 backup
+
+* **Monitoring**: Application logs, performance metrics, error tracking
 
 ### 8.2 CI/CD Pipeline
+
 1. Code push triggers GitHub Actions
 2. Automated testing (unit, integration, e2e)
 3. Docker image build and push to registry
@@ -514,8 +557,14 @@ INSERT INTO users (id, email, password_hash, name, role_id) VALUES
 6. Production deployment with zero-downtime strategy
 
 ### 8.3 Scalability Considerations
-- Horizontal scaling with load balancer
-- Database connection pooling
-- Redis caching for frequently accessed data
-- CDN for static assets
-- Microservices architecture for future expansion
+
+* Horizontal scaling with load balancer
+
+* Database connection pooling
+
+* Redis caching for frequently accessed data
+
+* CDN for static assets
+
+* Microservices architecture for future expansion
+
