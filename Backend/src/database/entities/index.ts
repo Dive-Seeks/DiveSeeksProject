@@ -11,6 +11,7 @@ export { Branch } from './branch.entity';
 export { Category } from './category.entity';
 export { Product } from './product.entity';
 export { StockItem } from './stock-item.entity';
+export { Inventory } from './inventory.entity';
 
 // Order entities
 export { Order } from './order.entity';

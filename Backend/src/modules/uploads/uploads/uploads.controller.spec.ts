@@ -4,11 +4,23 @@ import { UploadsService } from './uploads.service';
 
 describe('UploadsController', () => {
   let controller: UploadsController;
+  const mockService = {
+    create: jest.fn(),
+    findAll: jest.fn(),
+    findOne: jest.fn(),
+    update: jest.fn(),
+    remove: jest.fn(),
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UploadsController],
-      providers: [UploadsService],
+      providers: [
+        {
+          provide: UploadsService,
+          useValue: mockService,
+        },
+      ],
     }).compile();
 
     controller = module.get<UploadsController>(UploadsController);

@@ -3,28 +3,43 @@
 ## 1. Integration Overview
 
 ### 1.1 Purpose
+
 This document defines the **Uber Eats Integration Layer (Layer 5)** for DiveSeeks Ltd's multi-tenant backend system. This layer extends the existing NestJS + PostgreSQL architecture to support takeaway-type stores through seamless integration with the Uber Eats Marketplace APIs. The integration provides automated data synchronization with manual fallback capabilities, ensuring robust operations regardless of API availability.
 
 ### 1.2 Integration Scope
+
 The Uber Eats integration activates when a store's `business_type` is set to `"takeaway"` and includes:
-- Store information synchronization
-- Menu and category management
-- Menu item details with pricing and options
-- Availability hours and fulfillment types
-- Promotional campaigns and featured items
-- Real-time order processing integration
-- AI-powered analytics and optimization
+
+* Store information synchronization
+
+* Menu and category management
+
+* Menu item details with pricing and options
+
+* Availability hours and fulfillment types
+
+* Promotional campaigns and featured items
+
+* Real-time order processing integration
+
+* AI-powered analytics and optimization
 
 ### 1.3 Architecture Principles
-- **Dual-Mode Operation**: Automated API sync with manual entry fallback
-- **Data Consistency**: Unified data models for both integration modes
-- **Fault Tolerance**: Graceful degradation when API is unavailable
-- **Multi-Tenant Compliance**: Full isolation and security per tenant
-- **Performance Optimization**: Efficient caching and batch processing
+
+* **Dual-Mode Operation**: Automated API sync with manual entry fallback
+
+* **Data Consistency**: Unified data models for both integration modes
+
+* **Fault Tolerance**: Graceful degradation when API is unavailable
+
+* **Multi-Tenant Compliance**: Full isolation and security per tenant
+
+* **Performance Optimization**: Efficient caching and batch processing
 
 ## 2. Uber Eats API Integration Logic
 
 ### 2.1 Integration Trigger Conditions
+
 ```typescript
 // Integration activation logic
 if (store.business_type === 'takeaway' && store.ubereats_integration_enabled) {
@@ -39,50 +54,83 @@ if (store.business_type === 'takeaway' && store.ubereats_integration_enabled) {
 ### 2.2 API Integration Components
 
 #### 2.2.1 Store Information Sync
-- **Endpoint**: `/stores/{store_id}`
-- **Data Retrieved**:
-  - Store name, address, and contact information
-  - Operating status and availability
-  - Delivery zones and service areas
-  - Store configuration and settings
-  - Business hours and special schedules
+
+* **Endpoint**: `/stores/{store_id}`
+
+* **Data Retrieved**:
+
+  * Store name, address, and contact information
+
+  * Operating status and availability
+
+  * Delivery zones and service areas
+
+  * Store configuration and settings
+
+  * Business hours and special schedules
 
 #### 2.2.2 Menu Management Sync
-- **Endpoint**: `/stores/{store_id}/menus`
-- **Data Retrieved**:
-  - Menu structure and categories
-  - Item hierarchy and organization
-  - Pricing and availability status
-  - Menu activation schedules
+
+* **Endpoint**: `/stores/{store_id}/menus`
+
+* **Data Retrieved**:
+
+  * Menu structure and categories
+
+  * Item hierarchy and organization
+
+  * Pricing and availability status
+
+  * Menu activation schedules
 
 #### 2.2.3 Menu Items Sync
-- **Endpoint**: `/stores/{store_id}/menus/{menu_id}/items`
-- **Data Retrieved**:
-  - Item details (name, description, images)
-  - Pricing information and currency
-  - Customization options and modifiers
-  - Nutritional information
-  - Availability and stock status
+
+* **Endpoint**: `/stores/{store_id}/menus/{menu_id}/items`
+
+* **Data Retrieved**:
+
+  * Item details (name, description, images)
+
+  * Pricing information and currency
+
+  * Customization options and modifiers
+
+  * Nutritional information
+
+  * Availability and stock status
 
 #### 2.2.4 Fulfillment Options
-- **Endpoint**: `/stores/{store_id}/fulfillment`
-- **Data Retrieved**:
-  - Pickup availability and timing
-  - Delivery zones and fees
-  - Estimated preparation times
-  - Special fulfillment requirements
+
+* **Endpoint**: `/stores/{store_id}/fulfillment`
+
+* **Data Retrieved**:
+
+  * Pickup availability and timing
+
+  * Delivery zones and fees
+
+  * Estimated preparation times
+
+  * Special fulfillment requirements
 
 #### 2.2.5 Promotions and Campaigns
-- **Endpoint**: `/stores/{store_id}/promotions`
-- **Data Retrieved**:
-  - Active promotional campaigns
-  - Discount rules and conditions
-  - Featured item highlights
-  - Campaign performance metrics
+
+* **Endpoint**: `/stores/{store_id}/promotions`
+
+* **Data Retrieved**:
+
+  * Active promotional campaigns
+
+  * Discount rules and conditions
+
+  * Featured item highlights
+
+  * Campaign performance metrics
 
 ### 2.3 Sample Uber Eats API Responses
 
 #### 2.3.1 Store Information Response
+
 ```json
 {
   "store_id": "uber_store_12345",
@@ -119,6 +167,7 @@ if (store.business_type === 'takeaway' && store.ubereats_integration_enabled) {
 ```
 
 #### 2.3.2 Menu Structure Response
+
 ```json
 {
   "menu_id": "menu_67890",
@@ -145,6 +194,7 @@ if (store.business_type === 'takeaway' && store.ubereats_integration_enabled) {
 ```
 
 #### 2.3.3 Menu Items Response
+
 ```json
 {
   "items": [
@@ -192,6 +242,7 @@ if (store.business_type === 'takeaway' && store.ubereats_integration_enabled) {
 ### 3.1 Uber Eats Integration Schema (Automated)
 
 #### 3.1.1 Integration Tracking
+
 ```sql
 -- Uber Eats integration metadata
 CREATE TABLE ubereats_integrations (
@@ -219,6 +270,7 @@ CREATE INDEX idx_ubereats_integrations_sync ON ubereats_integrations(last_sync_a
 ```
 
 #### 3.1.2 Store Information
+
 ```sql
 -- Uber Eats store information
 CREATE TABLE ubereats_store_info (
@@ -249,6 +301,7 @@ CREATE INDEX idx_ubereats_store_info_synced ON ubereats_store_info(synced_at);
 ```
 
 #### 3.1.3 Menu Structure
+
 ```sql
 -- Uber Eats menus
 CREATE TABLE ubereats_menus (
@@ -287,6 +340,7 @@ CREATE INDEX idx_ubereats_categories_active ON ubereats_menu_categories(active);
 ```
 
 #### 3.1.4 Menu Items
+
 ```sql
 -- Uber Eats menu items
 CREATE TABLE ubereats_menu_items (
@@ -316,6 +370,7 @@ CREATE INDEX idx_ubereats_items_synced ON ubereats_menu_items(synced_at);
 ```
 
 #### 3.1.5 Availability and Promotions
+
 ```sql
 -- Uber Eats availability schedules
 CREATE TABLE ubereats_availability (
@@ -362,6 +417,7 @@ CREATE INDEX idx_ubereats_promotions_dates ON ubereats_promotions(start_date, en
 ### 3.2 Manual Entry Schema (Fallback)
 
 #### 3.2.1 Manual Takeaway Configuration
+
 ```sql
 -- Manual takeaway store configuration
 CREATE TABLE manual_takeaway_config (
@@ -391,6 +447,7 @@ CREATE INDEX idx_manual_takeaway_config_active ON manual_takeaway_config(active)
 ```
 
 #### 3.2.2 Manual Menu Management
+
 ```sql
 -- Manual takeaway menus
 CREATE TABLE manual_takeaway_menus (
@@ -442,6 +499,7 @@ CREATE INDEX idx_manual_takeaway_items_available ON manual_takeaway_items(availa
 ```
 
 #### 3.2.3 Manual Availability Management
+
 ```sql
 -- Manual availability schedules
 CREATE TABLE manual_takeaway_availability (
@@ -486,6 +544,7 @@ CREATE INDEX idx_manual_promotions_active ON manual_takeaway_promotions(active);
 ## 4. Entity Relationship Diagrams
 
 ### 4.1 Uber Eats Integration Schema ERD
+
 ```mermaid
 erDiagram
     BRANCHES ||--o{ UBEREATS_INTEGRATIONS : has
@@ -574,6 +633,7 @@ erDiagram
 ```
 
 ### 4.2 Manual Entry Schema ERD
+
 ```mermaid
 erDiagram
     BRANCHES ||--o{ MANUAL_TAKEAWAY_CONFIG : configures
@@ -648,6 +708,7 @@ erDiagram
 ### 5.1 Uber Eats Integration Module
 
 #### 5.1.1 Module Structure
+
 ```
 modules/integrations/ubereats/
 ├── ubereats-integration.module.ts
@@ -685,6 +746,7 @@ modules/integrations/ubereats/
 ### 5.2 Manual Takeaway Module
 
 #### 5.2.1 Module Structure
+
 ```
 modules/takeaway/manual/
 ├── manual-takeaway.module.ts
@@ -719,6 +781,7 @@ modules/takeaway/manual/
 ### 6.1 Uber Eats Integration Endpoints
 
 #### 6.1.1 Sync Operations
+
 ```typescript
 // POST /api/v1/integrations/ubereats/sync
 @Post('sync')
@@ -748,6 +811,7 @@ async getSyncStatus(
 ```
 
 #### 6.1.2 Store Information
+
 ```typescript
 // GET /api/v1/integrations/ubereats/store/:storeId
 @Get('store/:storeId')
@@ -774,6 +838,7 @@ async getUberEatsMenu(
 ```
 
 #### 6.1.3 Webhook Endpoints
+
 ```typescript
 // POST /api/v1/integrations/ubereats/webhook
 @Post('webhook')
@@ -789,6 +854,7 @@ async handleUberEatsWebhook(
 ### 6.2 Manual Takeaway Endpoints
 
 #### 6.2.1 Menu Management
+
 ```typescript
 // POST /api/v1/takeaway/menu
 @Post('menu')
@@ -827,6 +893,7 @@ async updateTakeawayMenu(
 ```
 
 #### 6.2.2 Item Management
+
 ```typescript
 // POST /api/v1/takeaway/items
 @Post('items')
@@ -855,6 +922,7 @@ async getTakeawayItems(
 ## 7. Fallback Logic Implementation
 
 ### 7.1 Integration Mode Detection
+
 ```typescript
 @Injectable()
 export class TakeawayModeService {
@@ -924,6 +992,7 @@ enum TakeawayMode {
 ```
 
 ### 7.2 Unified Data Access Layer
+
 ```typescript
 @Injectable()
 export class UnifiedTakeawayService {
@@ -1028,6 +1097,7 @@ export class UnifiedTakeawayService {
 ```
 
 ### 10.2 Webhook Security
+
 ```typescript
 @Injectable()
 export class UberEatsWebhookGuard implements CanActivate {
@@ -1084,6 +1154,7 @@ export class UberEatsWebhookGuard implements CanActivate {
 ## 11. Testing Strategy
 
 ### 11.1 Integration Testing
+
 ```typescript
 describe('UberEats Integration', () => {
   let app: INestApplication;
@@ -1147,6 +1218,7 @@ describe('UberEats Integration', () => {
 ## 12. Deployment and Configuration
 
 ### 12.1 Environment Variables
+
 ```bash
 # Uber Eats API Configuration
 UBEREATS_API_BASE_URL=https://api.uber.com/v1/eats
@@ -1168,6 +1240,7 @@ FALLBACK_NOTIFICATION_ENABLED=true
 ```
 
 ### 12.2 Database Migrations
+
 ```sql
 -- Migration: 001_create_ubereats_integration_tables.sql
 BEGIN;
@@ -1193,6 +1266,7 @@ COMMIT;
 ## 13. Monitoring and Analytics
 
 ### 13.1 Integration Metrics
+
 ```typescript
 @Injectable()
 export class UberEatsMetricsService {
@@ -1235,6 +1309,7 @@ export class UberEatsMetricsService {
 ```
 
 ### 13.2 Business Intelligence
+
 ```typescript
 @Injectable()
 export class TakeawayAnalyticsService {
@@ -1294,6 +1369,7 @@ export class TakeawayAnalyticsService {
 ## 14. Cache Management
 
 ### 14.1 Cache Invalidation Strategy
+
 ```typescript
 @Injectable()
 export class UberEatsCacheService {
@@ -1350,6 +1426,7 @@ export class UberEatsCacheService {
 ## 15. Documentation and Support
 
 ### 15.1 API Documentation
+
 ```yaml
 # OpenAPI specification for Uber Eats Integration endpoints
 openapi: 3.0.0
@@ -1386,6 +1463,7 @@ paths:
 ```
 
 ### 15.2 Troubleshooting Guide
+
 ```markdown
 # Uber Eats Integration Troubleshooting
 
@@ -1419,50 +1497,73 @@ paths:
 ## 16. Future Enhancements
 
 ### 16.1 Planned Features
-- **Real-time Menu Updates**: WebSocket-based real-time synchronization
-- **Advanced Analytics**: Machine learning-powered demand forecasting
-- **Multi-Platform Integration**: Support for additional delivery platforms
-- **Automated Pricing**: Dynamic pricing based on demand and competition
-- **Inventory Management**: Real-time stock level synchronization
+
+* **Real-time Menu Updates**: WebSocket-based real-time synchronization
+
+* **Advanced Analytics**: Machine learning-powered demand forecasting
+
+* **Multi-Platform Integration**: Support for additional delivery platforms
+
+* **Automated Pricing**: Dynamic pricing based on demand and competition
+
+* **Inventory Management**: Real-time stock level synchronization
 
 ### 16.2 Scalability Improvements
-- **Microservices Architecture**: Split integration logic into dedicated services
-- **Event-Driven Architecture**: Implement event sourcing for better auditability
-- **Horizontal Scaling**: Support for multiple integration service instances
-- **Database Sharding**: Partition data by geographic regions
+
+* **Microservices Architecture**: Split integration logic into dedicated services
+
+* **Event-Driven Architecture**: Implement event sourcing for better auditability
+
+* **Horizontal Scaling**: Support for multiple integration service instances
+
+* **Database Sharding**: Partition data by geographic regions
 
 ## 17. Compliance and Security
 
 ### 17.1 Data Privacy
-- **GDPR Compliance**: Implement data retention and deletion policies
-- **PCI DSS**: Secure handling of payment-related data
-- **Data Encryption**: End-to-end encryption for sensitive data
-- **Access Controls**: Role-based access to integration features
+
+* **GDPR Compliance**: Implement data retention and deletion policies
+
+* **PCI DSS**: Secure handling of payment-related data
+
+* **Data Encryption**: End-to-end encryption for sensitive data
+
+* **Access Controls**: Role-based access to integration features
 
 ### 17.2 Security Best Practices
-- **API Key Rotation**: Regular rotation of API credentials
-- **Rate Limiting**: Implement rate limiting for all endpoints
-- **Input Validation**: Comprehensive validation of all inputs
-- **Audit Logging**: Complete audit trail for all operations
 
----
+* **API Key Rotation**: Regular rotation of API credentials
+
+* **Rate Limiting**: Implement rate limiting for all endpoints
+
+* **Input Validation**: Comprehensive validation of all inputs
+
+* **Audit Logging**: Complete audit trail for all operations
+
+***
 
 ## Conclusion
 
 The Uber Eats Integration Layer (Layer 5) provides a comprehensive solution for integrating takeaway stores with the Uber Eats platform while maintaining flexibility through manual fallback options. The implementation follows DiveSeeks' architectural principles of modularity, scalability, and maintainability.
 
 Key benefits:
-- **Seamless Integration**: Automated synchronization with Uber Eats API
-- **Fault Tolerance**: Automatic fallback to manual mode when needed
-- **Performance Optimization**: Intelligent caching and batch processing
-- **Comprehensive Monitoring**: Detailed metrics and analytics
-- **Security First**: Robust security measures and compliance features
+
+* **Seamless Integration**: Automated synchronization with Uber Eats API
+
+* **Fault Tolerance**: Automatic fallback to manual mode when needed
+
+* **Performance Optimization**: Intelligent caching and batch processing
+
+* **Comprehensive Monitoring**: Detailed metrics and analytics
+
+* **Security First**: Robust security measures and compliance features
 
 This integration layer positions DiveSeeks to effectively serve takeaway businesses while providing the foundation for future multi-platform integrations.
 
 ## 8. AI Integration Points
 
 ### 8.1 Performance Analytics
+
 ```typescript
 @Injectable()
 export class TakeawayAnalyticsService {
@@ -1512,6 +1613,7 @@ export class TakeawayAnalyticsService {
 ```
 
 ### 8.2 Content Generation
+
 ```typescript
 @Injectable()
 export class TakeawayContentService {
@@ -1577,6 +1679,7 @@ export class TakeawayContentService {
 ## 9. Error Handling and Monitoring
 
 ### 9.1 Integration Health Monitoring
+
 ```typescript
 @Injectable()
 export class UberEatsHealthService {
@@ -1630,6 +1733,7 @@ export class UberEatsHealthService {
 ```
 
 ### 9.2 Sync Error Recovery
+
 ```typescript
 @Injectable()
 export class UberEatsSyncRecoveryService {
@@ -1675,7 +1779,8 @@ export class UberEatsSyncRecoveryService {
 ## 10. Security and Compliance
 
 ### 10.1 API Credentials Management
-```typescript
+
+````typescript
 @Injectable()
 export class UberEatsCredentialsService {
   constructor(
@@ -1754,11 +1859,12 @@ export class UberEatsSyncRecoveryService {
     }
   }
 }
-```
+````
 
 ## 10. Security and Compliance
 
 ### 10.1 API Credentials Management
+
 ```typescript
 @Injectable()
 export class UberEatsCredentialsService {
@@ -1802,6 +1908,7 @@ export class UberEatsCredentialsService {
 ```
 
 ### 10.2 Webhook Security
+
 ```typescript
 @Injectable()
 export class UberEatsWebhookGuard implements CanActivate {
@@ -1858,6 +1965,7 @@ export class UberEatsWebhookGuard implements CanActivate {
 ## 11. Testing Strategy
 
 ### 11.1 Integration Testing
+
 ```typescript
 describe('UberEats Integration', () => {
   let app: INestApplication;
@@ -1921,6 +2029,7 @@ describe('UberEats Integration', () => {
 ## 12. Deployment and Configuration
 
 ### 12.1 Environment Variables
+
 ```bash
 # Uber Eats API Configuration
 UBEREATS_API_BASE_URL=https://api.uber.com/v1/eats
@@ -1942,6 +2051,7 @@ FALLBACK_NOTIFICATION_ENABLED=true
 ```
 
 ### 12.2 Database Migrations
+
 ```sql
 -- Migration: 001_create_ubereats_integration_tables.sql
 BEGIN;
@@ -1967,6 +2077,7 @@ COMMIT;
 ## 13. Performance Optimization
 
 ### 13.1 Caching Strategy
+
 ```typescript
 @Injectable()
 export class UberEatsCacheService {
@@ -1993,3 +2104,5 @@ export class UberEatsCacheService {
     
     return menu;
   }
+```
+

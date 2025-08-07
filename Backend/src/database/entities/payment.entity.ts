@@ -8,11 +8,7 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
-import {
-  PaymentMethod,
-  TransactionStatus,
-  TransactionType,
-} from '../../shared/enums';
+import { PaymentMethod, TransactionStatus } from '../../shared/enums';
 import { Order } from './order.entity';
 import { Transaction } from './transaction.entity';
 

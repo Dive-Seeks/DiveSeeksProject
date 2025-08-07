@@ -4,11 +4,23 @@ import { BranchesService } from './branches.service';
 
 describe('BranchesController', () => {
   let controller: BranchesController;
+  const mockService = {
+    create: jest.fn(),
+    findAll: jest.fn(),
+    findOne: jest.fn(),
+    update: jest.fn(),
+    remove: jest.fn(),
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [BranchesController],
-      providers: [BranchesService],
+      providers: [
+        {
+          provide: BranchesService,
+          useValue: mockService,
+        },
+      ],
     }).compile();
 
     controller = module.get<BranchesController>(BranchesController);

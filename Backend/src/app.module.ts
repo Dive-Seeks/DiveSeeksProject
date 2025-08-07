@@ -17,6 +17,9 @@ import { PaymentsModule } from './modules/payments/payments.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { ReportsModule } from './modules/reports/reports.module';
 import { UploadsModule } from './modules/uploads/uploads.module';
+import { SuperAdminModule } from './modules/super-admin/super-admin.module';
+import { BrokerModule } from './modules/broker/broker.module';
+import { BusinessOwnerModule } from './modules/business-owner/business-owner.module';
 
 @Module({
   imports: [
@@ -44,6 +47,9 @@ import { UploadsModule } from './modules/uploads/uploads.module';
     NotificationsModule,
     ReportsModule,
     UploadsModule,
+    SuperAdminModule,
+    BrokerModule,
+    BusinessOwnerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

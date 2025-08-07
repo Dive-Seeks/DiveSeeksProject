@@ -136,7 +136,7 @@ export class AuthService {
 
     try {
       // Verify refresh token
-      const payload = this.jwtService.verify<RefreshTokenPayload>(
+      const _payload = this.jwtService.verify<RefreshTokenPayload>(
         refreshToken,
         {
           secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
@@ -168,7 +168,7 @@ export class AuthService {
         ...tokens,
         user: this.mapUserToResponseDto(userSession.user),
       };
-    } catch (error) {
+    } catch {
       throw new UnauthorizedException('Invalid or expired refresh token');
     }
   }

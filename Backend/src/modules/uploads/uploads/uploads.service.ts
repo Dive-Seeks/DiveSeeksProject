@@ -4,7 +4,7 @@ import { UpdateUploadDto } from './dto/update-upload.dto';
 
 @Injectable()
 export class UploadsService {
-  create(createUploadDto: CreateUploadDto) {
+  create(_createUploadDto: CreateUploadDto) {
     return 'This action adds a new upload';
   }
 
@@ -16,7 +16,7 @@ export class UploadsService {
     return `This action returns a #${id} upload`;
   }
 
-  update(id: number, updateUploadDto: UpdateUploadDto) {
+  update(id: number, _updateUploadDto: UpdateUploadDto) {
     return `This action updates a #${id} upload`;
   }
 

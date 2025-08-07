@@ -6,7 +6,6 @@ import {
   HttpStatus,
   UseGuards,
   Get,
-  Req,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -16,7 +15,7 @@ import {
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { ThrottlerGuard } from '@nestjs/throttler';
-import { Request } from 'express';
+
 import { AuthService } from './auth.service';
 import {
   RegisterDto,
