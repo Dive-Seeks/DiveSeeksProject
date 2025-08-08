@@ -168,7 +168,7 @@ export class AuthService {
         ...tokens,
         user: this.mapUserToResponseDto(userSession.user),
       };
-    } catch {
+    } catch (_error) {
       throw new UnauthorizedException('Invalid or expired refresh token');
     }
   }

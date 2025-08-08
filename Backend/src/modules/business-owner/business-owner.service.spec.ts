@@ -139,30 +139,6 @@ describe('BusinessOwnerService', () => {
           provide: getRepositoryToken(Inventory),
           useValue: mockInventoryRepository,
         },
-        {
-          provide: 'UsersService',
-          useValue: { findByEmail: jest.fn(), create: jest.fn() },
-        },
-        {
-          provide: 'BusinessesService',
-          useValue: { create: jest.fn(), findAll: jest.fn() },
-        },
-        {
-          provide: 'BranchesService',
-          useValue: { create: jest.fn(), findAll: jest.fn() },
-        },
-        {
-          provide: 'ProductsService',
-          useValue: { create: jest.fn(), findAll: jest.fn() },
-        },
-        {
-          provide: 'InventoryService',
-          useValue: { create: jest.fn(), findAll: jest.fn() },
-        },
-        {
-          provide: 'PosService',
-          useValue: { processTransaction: jest.fn() },
-        },
       ],
     }).compile();
 

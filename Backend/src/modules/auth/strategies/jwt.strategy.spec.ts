@@ -52,6 +52,7 @@ describe('JwtStrategy', () => {
 
     strategy = module.get<JwtStrategy>(JwtStrategy);
     userRepository = module.get<Repository<User>>(getRepositoryToken(User));
+    configService = module.get<ConfigService>(ConfigService);
 
     // Mock the JWT secret
     mockConfigService.get.mockReturnValue('test-jwt-secret');

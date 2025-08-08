@@ -4,7 +4,7 @@ import { UpdatePoDto } from './dto/update-po.dto';
 
 @Injectable()
 export class PosService {
-  create(_createPoDto: CreatePoDto) {
+  create(createPoDto: CreatePoDto) {
     return 'This action adds a new po';
   }
 
@@ -16,7 +16,7 @@ export class PosService {
     return `This action returns a #${id} po`;
   }
 
-  update(id: number, _updatePoDto: UpdatePoDto) {
+  update(id: number, updatePoDto: UpdatePoDto) {
     return `This action updates a #${id} po`;
   }
 

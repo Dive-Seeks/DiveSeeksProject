@@ -6,6 +6,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
+import { Request } from 'express';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
@@ -26,10 +27,19 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       return true;
     }
 
+    // Check if this is an API key protected route
+    const request = context.switchToHttp().getRequest<Request>();
+    const apiKey = request.headers['x-api-key'];
+    
+    // If API key is present, let the API key guard handle it
+    if (apiKey) {
+      return true;
+    }
+
     return super.canActivate(context);
   }
 
-  handleRequest(err: any, user: any, _info: any, _context: ExecutionContext) {
+  handleRequest(err: any, user: any, info: any, context: ExecutionContext) {
     // You can throw an exception based on either "info" or "err" arguments
     if (err || !user) {
       throw err || new UnauthorizedException('Invalid or expired token');

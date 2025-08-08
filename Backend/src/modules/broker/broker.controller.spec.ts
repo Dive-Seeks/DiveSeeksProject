@@ -264,7 +264,6 @@ describe('BrokerController', () => {
       expect(result).toEqual(mockBusiness);
       expect(service.createBusiness).toHaveBeenCalledWith(
         'broker-1',
-        'owner-1',
         createBusinessDto,
       );
     });
@@ -397,7 +396,6 @@ describe('BrokerController', () => {
       expect(result).toEqual(mockApplication);
       expect(service.createFundingApplication).toHaveBeenCalledWith(
         'broker-1',
-        'business-1',
         applicationData,
       );
     });

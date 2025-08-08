@@ -7,32 +7,32 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "DiveSeeks Ltd | Software, Security & Business Funding Solutions",
+  title: "Enterprise AI Platform | Secure AI Solutions for Business & Government",
   description:
-    "DiveSeeks Ltd offers comprehensive business solutions through Software Services (POS systems, online ordering), Security Services (SIA-licensed staff, cybersecurity), and Business Funding services.",
-  keywords: "business solutions, software services, POS system, online ordering, security services, SIA licensed, cybersecurity, business funding, broker services, React Native app",
+    "Enterprise-grade AI platform with LLM conversations, customizable agents, secure knowledge base, and MCP server support for businesses and government agencies.",
+  keywords: "enterprise AI, secure AI, government AI solutions, LLM, knowledge base, AI agents, MCP server",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://diveseeks.com",
-    title: "DiveSeeks Ltd | Comprehensive Business Solutions",
+    url: "https://your-domain.com",
+    title: "Enterprise AI Platform | Secure AI Solutions",
     description:
-      "Multi-service company offering Software Services, Security Services, and Business Funding solutions for small to medium businesses.",
-    siteName: "DiveSeeks Ltd",
+      "Enterprise-grade AI platform with advanced security, customization, and control for businesses and government agencies.",
+    siteName: "Enterprise AI Platform",
     images: [
       {
-        url: "https://diveseeks.com/og-image.jpg",
+        url: "https://your-domain.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "DiveSeeks Ltd - Business Solutions",
+        alt: "Enterprise AI Platform",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "DiveSeeks Ltd | Software, Security & Business Funding",
-    description: "Comprehensive business solutions including software development, security services, and funding assistance.",
-    images: ["https://diveseeks.com/twitter-image.jpg"],
+    title: "Enterprise AI Platform | Secure AI Solutions",
+    description: "Enterprise-grade AI platform with advanced security, customization, and control.",
+    images: ["https://your-domain.com/twitter-image.jpg"],
   },
   robots: {
     index: true,

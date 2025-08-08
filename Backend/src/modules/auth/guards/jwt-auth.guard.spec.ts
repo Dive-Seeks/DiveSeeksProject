@@ -112,7 +112,7 @@ describe('JwtAuthGuard', () => {
       );
       parentCanActivate.mockReturnValue(false);
 
-      const _result = guard.canActivate(mockContext);
+      const result = guard.canActivate(mockContext);
 
       expect(parentCanActivate).toHaveBeenCalledWith(mockContext);
     });

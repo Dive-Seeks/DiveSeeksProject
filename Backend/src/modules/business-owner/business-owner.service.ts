@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -368,10 +369,7 @@ export class BusinessOwnerService {
   }
 
   // POS Operations
-  async getPOSTransactions(
-    ownerId: string,
-    _branchId?: string,
-  ): Promise<any[]> {
+  async getPOSTransactions(ownerId: string, branchId?: string): Promise<any[]> {
     // Verify business owner exists
     await this.getBusinessOwnerProfile(ownerId);
 

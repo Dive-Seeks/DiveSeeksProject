@@ -4,7 +4,7 @@ import { UpdateBusinessDto } from './dto/update-business.dto';
 
 @Injectable()
 export class BusinessesService {
-  create(_createBusinessDto: CreateBusinessDto) {
+  create(createBusinessDto: CreateBusinessDto) {
     return 'This action adds a new business';
   }
 
@@ -16,7 +16,7 @@ export class BusinessesService {
     return `This action returns a #${id} business`;
   }
 
-  update(id: number, _updateBusinessDto: UpdateBusinessDto) {
+  update(id: number, updateBusinessDto: UpdateBusinessDto) {
     return `This action updates a #${id} business`;
   }
 

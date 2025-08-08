@@ -4,7 +4,7 @@ import { UpdateBranchDto } from './dto/update-branch.dto';
 
 @Injectable()
 export class BranchesService {
-  create(_createBranchDto: CreateBranchDto) {
+  create(createBranchDto: CreateBranchDto) {
     return 'This action adds a new branch';
   }
 
@@ -16,7 +16,7 @@ export class BranchesService {
     return `This action returns a #${id} branch`;
   }
 
-  update(id: number, _updateBranchDto: UpdateBranchDto) {
+  update(id: number, updateBranchDto: UpdateBranchDto) {
     return `This action updates a #${id} branch`;
   }
 

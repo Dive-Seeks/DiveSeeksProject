@@ -20,6 +20,7 @@ import { UploadsModule } from './modules/uploads/uploads.module';
 import { SuperAdminModule } from './modules/super-admin/super-admin.module';
 import { BrokerModule } from './modules/broker/broker.module';
 import { BusinessOwnerModule } from './modules/business-owner/business-owner.module';
+import { ApiKeyModule } from './modules/api-key/api-key.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { BusinessOwnerModule } from './modules/business-owner/business-owner.mod
     SuperAdminModule,
     BrokerModule,
     BusinessOwnerModule,
+    ApiKeyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
