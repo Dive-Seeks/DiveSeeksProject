@@ -28,9 +28,9 @@ export default function Navbar() {
   }, [])
 
   const navItems = [
-    { name: "Features", link: "#features" },
-    { name: "Use Cases", link: "#use-cases" },
-    { name: "Testimonials", link: "#testimonials" },
+    { name: "Software Services", link: "/software-services" },
+    { name: "Security", link: "/security" },
+    { name: "Funding Solutions", link: "/funding-solutions" },
     { name: "Contact", link: "#contact" },
   ]
 

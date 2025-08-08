@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -14,8 +16,7 @@ import {
   TrendingUp,
   ArrowRight,
   Heart,
-  Lightbulb,
-  Handshake
+  Lightbulb
 } from "lucide-react"
 
 interface TeamMember {
@@ -89,7 +90,7 @@ const coreValues: CoreValue[] = [
   {
     title: "Partnership",
     description: "We build long-term partnerships with our clients, working collaboratively to achieve their business objectives.",
-    icon: <Handshake className="h-6 w-6" />,
+    icon: <Users className="h-6 w-6" />,
     color: "text-orange-600"
   }
 ]
@@ -381,3 +382,6 @@ export default function About() {
           </div>
         </div>
       </div>
+    </section>
+  )
+}
